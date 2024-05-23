@@ -6,6 +6,17 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
 function Home({ navigation }) {
+  const [places, setPlaces] = useState([]);
+
+  const getPlaces = async () => {
+    const response = await fetch("https://dewalaravel.com/api/places");
+    const placesData = await response.json();
+
+    console.log(placesData);
+  };
+    useEffect(() => {
+    getPlaces();
+  }, []);
   return (
     <View style={styles.container}>
       <Text>Home Screen</Text>
