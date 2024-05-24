@@ -18,10 +18,35 @@ function Home({ navigation }) {
     getPlaces();
   }, []);
   return (
-    <View style={styles.container}>
-      <Text>Home Screen</Text>
-      <Button onPress={() => navigation.navigate('Details')}>go to Details</Button>
-    </View>
+    <ScrollView style={styles.container}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {places.data ? (
+          places.data.map((place, index) => (
+            <Card key={index} style={styles.card}>
+              <Card.Cover source={{ uri: place.photo }} />
+              <Card.Content style={{ padding: 7 }}>
+                <Title >{place.name}</Title>
+                <Paragraph> {place.description}</Paragraph>
+                <Button
+                  mode="contained"
+                  onPress={() => navigation.navigate('Details', { place })}
+                >
+                  Go to Details
+                </Button>
+              </Card.Content>
+            </Card>
+          ))
+        ) : (
+          <Text>Loading...</Text>
+        )}
+      </View>
+    </ScrollView>
   );
 }
 function Details() {
