@@ -1,11 +1,11 @@
-// Home.js
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, ScrollView, Text } from 'react-native';
-import { Searchbar, Card, Title, Paragraph, Button, ActivityIndicator } from 'react-native-paper';
+import { Searchbar, Card, Title, Paragraph, Button, ActivityIndicator, Chip } from 'react-native-paper';
 
 function Home({ navigation }) {
     const [places, setPlaces] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState('');
 
     const getPlaces = async () => {
         try {
@@ -23,18 +23,30 @@ function Home({ navigation }) {
         getPlaces();
     }, []);
 
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+    };
+
+    const filteredPlaces = places.data
+        ? places.data.filter(place =>
+            place.name.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+        : [];
+
     return (
         <ScrollView style={styles.container}>
             <Searchbar
                 style={styles.searchbar}
                 placeholder="Search"
+                value={searchQuery}
+                onChangeText={handleSearch}
             />
             <View style={styles.content}>
                 {loading ? (
                     <ActivityIndicator animating={true} />
                 ) : (
-                    places.data ? (
-                        places.data.map((place, index) => (
+                    filteredPlaces.length > 0 ? (
+                        filteredPlaces.map((place, index) => (
                             <Card key={index} style={styles.card}>
                                 <Card.Cover source={{ uri: place.photo }} />
                                 <Card.Content style={{ padding: 7 }}>

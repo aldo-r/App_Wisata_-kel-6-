@@ -16,7 +16,6 @@ function DetailsScreen({ route }) {
                 </Card.Content>
             </Card>
         </ScrollView>
-
     );
 }
 
