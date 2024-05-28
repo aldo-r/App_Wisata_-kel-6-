@@ -58,34 +58,40 @@ function Home({ navigation }) {
                     onChangeText={handleSearch}
                 />
             )}
-            <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{
-                    gap: 14,
-                    paddingVertical: 10,
-                    paddingHorizontal: 7,
-                }}
-            >
-                {loading ? (
-                    <Text>Loading...</Text>
-                ) : (
-                    categories.map((category, index) => (
-                        <Chip
-                            key={index}
-                            icon="information"
-                            onPress={() => handleCategorySelect(category)}
-                            selected={selectedCategory === category}
-                            style={[
-                                styles.chip,
-                                selectedCategory === category && styles.selectedChip
-                            ]}
-                        >
-                            {category}
-                        </Chip>
-                    ))
-                )}
-            </ScrollView>
+            <View style={{
+                flexDirection: 'row',
+                height: 60,
+                gap: 20,
+                marginTop: 10,
+            }}>
+                <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={{
+                        gap: 14,
+                        paddingVertical: 10,
+                        paddingHorizontal: 7,
+                    }}
+                >
+                    {loading ? (
+                        <Text>Loading...</Text>
+                    ) : (
+                        categories.map((category, index) => (
+                            <Chip
+                                key={index}
+                                onPress={() => handleCategorySelect(category)}
+                                selected={selectedCategory === category}
+                                style={[
+                                    styles.chip,
+                                    selectedCategory === category && styles.selectedChip
+                                ]}
+                            >
+                                {category}
+                            </Chip>
+                        ))
+                    )}
+                </ScrollView>
+            </View>
             <ScrollView style={styles.content}>
                 {loading ? (
                     <ActivityIndicator animating={true} size="large" style={styles.loader} />
