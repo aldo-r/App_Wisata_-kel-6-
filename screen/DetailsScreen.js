@@ -1,12 +1,16 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView, } from 'react-native';
-import { Card, Title, Paragraph, Text } from 'react-native-paper';
+import { StyleSheet, View, ScrollView } from 'react-native';
+import { Card, Title, Paragraph, Text, Appbar } from 'react-native-paper';
 
-function DetailsScreen({ route }) {
+function DetailsScreen({ route, navigation }) {
     const { place } = route.params;
 
     return (
         <ScrollView style={styles.container}>
+            <Appbar.Header>
+                <Appbar.BackAction onPress={() => navigation.goBack()} />
+                <Appbar.Content title="DetailScreen" />
+            </Appbar.Header>
             <Card style={styles.container}>
                 <Card.Cover source={{ uri: place.photo }} style={styles.image} />
                 <Card.Content>
@@ -24,7 +28,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         margin: 1,
-        padding: 10,
     },
     image: {
         height: 200,
